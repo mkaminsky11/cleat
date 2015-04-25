@@ -1,10 +1,10 @@
 var colors = require("colors");
 var fs = require("fs");
+var cheerio = require('cheerio');
 
 var tags = [];
 var commands = [];
-var open_file = null;
-var use_file = null;
+var file = null;
 var html = null;
 
 if(process.argv.length > 2){
@@ -20,21 +20,51 @@ if(process.argv.length > 2){
     }
   });
 
-  //TODO: implement tags
-  /*
-  --help : help
-  -o : output file after command
-  */
+  //
+  //COMMANDS
+  //
 
   if(commands[0] === "open"){
       open(commands[1]);
   }
   else if(commands[0] === "use"){
       use(commands[1]);
+      if(commands[2] === "add"){
+        //by default, add to body
+        if((typeof commands[4]) === (typeof undefined)){
+          $("body").append(commands[3]); //like: node ohmahgerd.js use index.html add "<h1>hi</h1>"
+        }
+        else{
+          $(commands[3]).append(commands[4]);
+        }
+      }
+
+      //TODO:
+      /*
+      addClass
+      removeClass
+      remove
+      after
+      before
+      */
   }
   else{
     console.log(colors.red.bold.underline('This command does not exist'));
   }
+
+  if(file !== null){
+    fs.writeFileSync(file, $.html());
+  }
+
+  //
+  //TAGS
+  //
+
+  //TODO: implement tags
+  /*
+  --help : help
+  -o : output file after command
+  */
 
 }
 else{
@@ -45,8 +75,9 @@ else{
 
 function open(path){
   if(fs.existsSync(path)) {
-      open_file = path;
-
+      file = path;
+      html = fs.readFileSync(path, "utf8");
+      $ = cheerio.load(html);
   }
   else{
     console.log(colors.red.bold.underline('The file ' + path + ' does not exist'));
@@ -55,13 +86,11 @@ function open(path){
 
 function use(path){
   if(fs.existsSync(path)) {
-      use_file = path;
+      file = path;
+      html = fs.readFileSync(path, "utf8");
+      $ = cheerio.load(html);
   }
   else{
     console.log(colors.red.bold.underline('The file ' + path + ' does not exist'));
   }
-}
-
-function read(path){
-  html = fs.readFileSync(path, "utf8");
 }
