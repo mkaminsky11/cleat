@@ -1,11 +1,17 @@
 var colors = require("colors");
 var fs = require("fs");
 var cheerio = require('cheerio');
+var readline = require('readline');
+var rl = readline.createInterface(process.stdin, process.stdout);
 
 var tags = [];
 var commands = [];
 var file = null;
 var html = null;
+
+//**
+//MAIN LOGIC
+//**
 
 if(process.argv.length > 2){
   //first, get tags and commands
@@ -26,6 +32,27 @@ if(process.argv.length > 2){
 
   if(commands[0] === "open"){
       open(commands[1]);
+
+      rl.setPrompt('OMG> ');
+      rl.prompt();
+      rl.on('line', function(line){
+        var input = line.trim();
+        //
+        if(input === "exit"){
+          rl.close();
+          process.exit(0);
+        }
+        else{
+          
+        }
+
+
+        //
+
+        rl.prompt();
+      }).on('close', function() {
+        process.exit(0);
+      });
   }
   else if(commands[0] === "use"){
       use(commands[1]);
@@ -72,6 +99,10 @@ else{
   console.log(colors.red.bold.underline('You didn\'t pass any arguments!'));
   console.log('Try \'ohmahgerd --help\'')
 }
+
+//**
+//HELPER FUNCTIONS
+//**
 
 function open(path){
   if(fs.existsSync(path)) {
