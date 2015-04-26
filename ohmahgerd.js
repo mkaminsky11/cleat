@@ -10,6 +10,17 @@ var file = null;
 var html = null;
 
 //**
+//COMMANDS
+//**
+
+var func = {};
+
+func.add = function(dest, to_add){ //like: ohmahgerd use index.html add ".p" "<i>hi</i>"
+  console.log(dest + "|" + to_add);
+  $(dest).append(to_add);
+};
+
+//**
 //MAIN LOGIC
 //**
 
@@ -37,17 +48,13 @@ if(process.argv.length > 2){
       rl.prompt();
       rl.on('line', function(line){
         var input = line.trim();
-        //
         if(input === "exit"){
           rl.close();
           process.exit(0);
         }
         else{
-          
+
         }
-
-
-        //
 
         rl.prompt();
       }).on('close', function() {
@@ -56,18 +63,20 @@ if(process.argv.length > 2){
   }
   else if(commands[0] === "use"){
       use(commands[1]);
-      if(commands[2] === "add"){
-        //by default, add to body
-        if((typeof commands[4]) === (typeof undefined)){
-          $("body").append(commands[3]); //like: node ohmahgerd.js use index.html add "<h1>hi</h1>"
-        }
-        else{
-          $(commands[3]).append(commands[4]);
-        }
+
+      var i = 2;
+      while(i < (commands.length - 1)){
+        var command_name = commands[i];
+        var num_args = func[command_name].length;
+        var args = commands.slice(i + 1, i + 2 + num_args);
+
+        func[command_name].apply(this, args);
+        i+=(num_args + 1);
       }
 
       //TODO:
       /*
+      add
       addClass
       removeClass
       remove
@@ -92,6 +101,8 @@ if(process.argv.length > 2){
   --help : help
   -o : output file after command
   */
+
+  process.exit(0);
 
 }
 else{
