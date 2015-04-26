@@ -1,16 +1,18 @@
-# ohmahgerd
-a tool to edit web pages through the command line
+# cleat
+A command line tool to modify web pages. Stay in your happy place.
+
+You do everything from the command line. Then why spoil your perfect setup with vim or emacs if you just want to make some simple edits?
 
 ### installation
 ```shell
-sudo npm -g ohmahgerd
+sudo npm -g cleat
 ```
 
 ### basics
 ```shell
-ohmahgerd use index.html add ".p" "<i>hi</i>" add ".p" "<b>also this</b>"
+cleat use index.html add ".p" "<i>hi</i>" add ".p" "<b>also this</b>"
 
-ohmahgerd use "*.html" css ".p" "color" "red"
+cleat use "*.html" css ".p" "color" "red"
 ```
 
 `".p"`: an example of a Jquery-style query
@@ -23,7 +25,7 @@ ohmahgerd use "*.html" css ".p" "color" "red"
 ### shell
 You can open up a shell with:
 ```shell
-ohmahgerd open "*.html"
+cleat open "*.html"
 ```
 
 ### command list

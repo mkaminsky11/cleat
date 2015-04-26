@@ -1,37 +1,34 @@
 {
-  "name": "ohmahgerd",
-  "description": "a tool to edit web pages through the command line",
+  "name": "cleat",
+  "description": "A command line tool to modify web pages. Stay in your happy place.",
   "version": "0.1.0",
-  "homepage": "https://github.com/mkaminsky11/ohmahgerd",
+  "homepage": "https://github.com/mkaminsky11/cleat",
   "author": {
     "name": "Michael Kaminsky",
     "email": "mkaminsky11@github.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mkaminsky11/ohmahgerd.git"
+    "url": "git://github.com/mkaminsky11/cleat.git"
   },
   "bugs": {
-    "url": "https://github.com/mkaminsky11/ohmahgerd/issues"
+    "url": "https://github.com/mkaminsky11/cleat/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/mkaminsky11/ohmahgerd/blob/master/LICENSE-MIT"
+      "url": "https://github.com/mkaminsky11/cleat/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "lib/ohmahgerd",
+  "main": "lib/cleat",
   "engines": {
     "node": "0.10"
   },
   "dependencies": {
-    "cheerio": "*",
-    "colors": "*",
-    "glob": "*"
   },
   "keywords": ["edit","command line"],
   "preferGlobal": "true",
   "bin": {
-    "filesearch" : "lib/ohmahgerd.js"
+    "filesearch" : "lib/cleat.js"
   }
 }
