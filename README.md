@@ -1,2 +1,2 @@
 # ohmahgerd
-a tool to make web pages through the command line
+a tool to edit web pages through the command line
