@@ -9,6 +9,23 @@ var commands = [];
 var file = null;
 var html = null;
 
+//TODO:
+/*
+add [done?] still TODO: add to body by default...?
+prepend [done]
+append: same as add [done?]
+addClass [done]
+removeClass [done]
+remove [done]
+after [done]
+before [done]
+attr [done]
+removeAttr [done]
+toggleClass [done]
+replaceWith [done]
+css [done]
+*/
+
 //**
 //COMMANDS
 //**
@@ -16,8 +33,53 @@ var html = null;
 var func = {};
 
 func.add = function(dest, to_add){ //like: ohmahgerd use index.html add ".p" "<i>hi</i>"
-  console.log(dest + "|" + to_add);
   $(dest).append(to_add);
+};
+
+func.append = func.add;
+
+func.prepend = function(dest, to_add){
+  $(dest).prepend(to_add);
+};
+
+func.addClass = function(dest, to_add){
+  $(dest).addClass(to_add);
+};
+
+func.removeClass = function(dest, to_remove){
+  $(dest).removeClass(to_remove);
+};
+
+func.toggleClass = function(dest, to_toggle){
+  $(dest).toggleClass(to_toggle);
+};
+
+func.remove = function(to_remove){
+  $(to_remove).remove();
+};
+
+func.after = function(dest, to_add){
+  $(dest).after(to_add);
+};
+
+func.before = function(dest, to_add){
+  $(dest).before(to_add);
+};
+
+func.attr = function(dest, attr, val){
+  $(dest).attr(attr, val);
+};
+
+func.removeAttr = function(dest, to_remove){
+  $(dest).removeAttr(to_remove);
+};
+
+func.replaceWith = function(dest, replace_with){
+  $(dest).replaceWith(replace_with);
+};
+
+func.css = function(dest, prop, val){
+  $(dest).css(prop, val);
 };
 
 //**
@@ -53,6 +115,28 @@ if(process.argv.length > 2){
           process.exit(0);
         }
         else{
+          var array = line.match(/\w+|"[^"]+"/g); //results in stuff like [ 'hi', '"there also"' ]
+
+          for(var i = 0; i < array.length; i++){
+            array[i] = stripQuote(array[i]);
+          }
+
+          console.log(array);
+
+          var i = 0;
+          while(i < array.length){
+            var command_name = array[i];
+            var num_args = func[command_name].length;
+            var args = array.slice(i + 1, i + 2 + num_args);
+
+            func[command_name].apply(this, args);
+            i+=(num_args + 1);
+          }
+
+          //write changes
+          if(file !== null){
+            fs.writeFileSync(file, $.html());
+          }
 
         }
 
@@ -65,7 +149,7 @@ if(process.argv.length > 2){
       use(commands[1]);
 
       var i = 2;
-      while(i < (commands.length - 1)){
+      while(i < (commands.length - 1)){ //this mess allows for chains: node ohmahgerd.js use index.html add ".p" "<i>hi</i>" add ".p" "<b>also this</b>"
         var command_name = commands[i];
         var num_args = func[command_name].length;
         var args = commands.slice(i + 1, i + 2 + num_args);
@@ -74,22 +158,14 @@ if(process.argv.length > 2){
         i+=(num_args + 1);
       }
 
-      //TODO:
-      /*
-      add
-      addClass
-      removeClass
-      remove
-      after
-      before
-      */
+      if(file !== null){
+        fs.writeFileSync(file, $.html());
+      }
+
+      process.exit(0);
   }
   else{
     console.log(colors.red.bold.underline('This command does not exist'));
-  }
-
-  if(file !== null){
-    fs.writeFileSync(file, $.html());
   }
 
   //
@@ -101,8 +177,6 @@ if(process.argv.length > 2){
   --help : help
   -o : output file after command
   */
-
-  process.exit(0);
 
 }
 else{
@@ -135,4 +209,12 @@ function use(path){
   else{
     console.log(colors.red.bold.underline('The file ' + path + ' does not exist'));
   }
+}
+
+String.prototype.replaceAt=function(index, character) {
+    return this.substr(0, index) + character + this.substr(index+character.length);
+}
+
+function stripQuote(str){
+  return str.replace(/"/g, "").replace(/'/g, "");
 }
