@@ -27,6 +27,18 @@ cleat open "*.html"
 
 ### command list
 
+###### default
+Sets the text to	
+```html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	</head>
+	<body>
+	</body>
+</html>
+```
+
 ###### add <query, html>
 Will add `html` at the end of anything that matches `query`. Identical to `append`.
 
@@ -77,5 +89,7 @@ Adds a `<script src="<src>"></script>` to the end of the `body` of the file.
 Changes the inner text of `query` to `text`.
 
 ### other
+
 `-o`: displays the changed files after they are changed.
+
 `--help`: help text
