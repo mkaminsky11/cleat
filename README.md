@@ -10,17 +10,14 @@ sudo npm -g cleat
 
 ### basics
 ```shell
+cleat use index.html text "h1" "this is a header"
+
 cleat use index.html add ".p" "<i>hi</i>" add ".p" "<b>also this</b>"
 
 cleat use "*.html" css ".p" "color" "red"
 ```
 
-`".p"`: an example of a Jquery-style query
-* `p`: all `<p>` elements
-* `.class`: all with `class` class
-* etc.
-
-`"*.html"`: an example of filenames with wildcards
+You can use JQuery style selectors like `".class"` and filenames with wildcards like `"*.html"` if you use `"`.
 
 ### shell
 You can open up a shell with:
@@ -56,11 +53,29 @@ Will insert `html` after anything that matches `query`.
 Will insert `html` before anything that matches `query`.
 
 ###### attr <query, attribute, value>
+Will change the attribute `attribute` of `query` to `value`. Useful for changing the `id` of items.
+
 ###### removeAttr <query, attribute>
+Will remove `attribute` from `query`.
+
 ###### toggleClass <query, class>
+If `query` has `class`, it will be removed. Otherwise, it will be added.
+
 ###### replaceWith <query, html>
+Replaces `query` with `html`.
+
 ###### css <query, property, val>
+Changes `property` of `query` to `val`.
+
 ###### stylesheet <href>
+Adds a `<link rel="stylesheet" href="<href>">` to the `head` of the file. 
+
 ###### script  <src>
+Adds a `<script src="<src>"></script>` to the end of the `body` of the file.
+
+###### text <query> <text>
+Changes the inner text of `query` to `text`.
 
 ### other
+`-o`: displays the changed files after they are changed.
+`--help`: help text
